@@ -19,8 +19,8 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
  * @author o_cetin3
  *
  */
-@Profile("DEV")
-@Configuration
+//@Profile("DEV")
+//@Configuration
 public class DatabaseConfig {
 
 	@Value("${db.driver}")
