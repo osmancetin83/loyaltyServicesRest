@@ -85,6 +85,7 @@ public class HibernateConfig {
 		hibernateProperties.put("hibernate.format_sql", Boolean.TRUE);
 		hibernateProperties.put("hibernate.use_sql_comments", Boolean.TRUE);
 		hibernateProperties.put("hibernate.enable_lazy_load_no_trans", Boolean.TRUE);
+		hibernateProperties.put("org.hibernate.envers.audit_table_suffix", "_A");
 		return hibernateProperties;
 	}
 }

@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
+
 import com.thy.loyaltyServicesRest.model.base.AbstractModel;
 
 import lombok.Data;
@@ -25,6 +27,7 @@ import lombok.ToString;
 @Table(name = "WEBSERVICE_RESULT_MESSAGE", schema = "LOYALTYDB")
 @ToString(callSuper=true,of= {"id"})
 @EqualsAndHashCode(callSuper=true,of= {"id"}) 
+@Audited
 public class WebserviceResultMessage extends AbstractModel implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -1,7 +1,11 @@
 package com.thy.loyaltyServicesRest.service.webservice.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.thy.loyaltyServicesRest.dao.base.IGenericDAO;
@@ -32,4 +36,5 @@ public class WebserviceServiceImpl extends BaseServiceImpl implements IWebservic
 		Webservice webservice = webserviceDAO.findByWebserviceName(webserviceName);
 		return webservice;
 	}
+	
 }

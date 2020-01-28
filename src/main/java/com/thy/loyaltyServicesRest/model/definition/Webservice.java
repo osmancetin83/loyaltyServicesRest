@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.envers.Audited;
+
 import com.google.common.collect.Lists;
 import com.thy.loyaltyServicesRest.model.base.AbstractModel;
 
@@ -27,6 +29,7 @@ import lombok.ToString;
 @Table(name = "WEBSERVICE", schema = "LOYALTYDB", uniqueConstraints = @UniqueConstraint(columnNames = "NAME"))
 @ToString(callSuper=true,of= {"id"})
 @EqualsAndHashCode(callSuper=true,of= {"id"}) //steak overflow hatalar�n� engelliyormu�
+@Audited
 public class Webservice extends AbstractModel implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;

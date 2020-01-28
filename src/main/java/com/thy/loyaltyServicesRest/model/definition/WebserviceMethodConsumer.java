@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.envers.Audited;
+
 import com.thy.loyaltyServicesRest.model.base.AbstractModel;
 
 import lombok.Data;
@@ -28,6 +30,7 @@ import lombok.ToString;
 @Table(name = "WEBSERVICE_METHOD_CONSUMER", schema = "LOYALTYDB")
 @ToString(callSuper=true,of= {"id"})
 @EqualsAndHashCode(callSuper=true,of= {"id"}) 
+@Audited
 public class WebserviceMethodConsumer extends AbstractModel implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
