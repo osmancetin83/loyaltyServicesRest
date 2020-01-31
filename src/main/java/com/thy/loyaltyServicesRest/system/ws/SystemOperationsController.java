@@ -45,6 +45,7 @@ public class SystemOperationsController {
 		
 		for(Webservice webservice : webserviceList) {
 			log=log+"###"+webservice.getId()+"-"+webservice.getName();
+			webservice.getWebserviceMethods();
 		}
 		systemProcessResponse.setStatus(log);
 

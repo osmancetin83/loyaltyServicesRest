@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="off" shutdownHook="disable" >
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout Pattern="%d{yy-MM-dd HH:mm:ss.SSS} [%t] %-5level %C{1}.%M(%L)
+									%marker txID:%X{txID} - sID:%X{sID} - conID:%X{conID} -
+									clReqID:%X{clReqID} - %msg%n"/>
+		</Console>
+
+		<RollingRandomAccessFile name="File-Appender-Info"
+								 fileName="${sys:thy.appdir}/loyaltyServicesRest/log/applog"
+								 filePattern="${sys:thy.appdir}/loyaltyServicesRest/log/applog-%d{yyyy-MM-dd-HH}.log"  
+								 immediateFlush="false">
+			<PatternLayout Pattern="%d{yy-MM-dd HH:mm:ss.SSS} %-5level %marker %C{1}.%M(%L)
+									txID:%X{txID} - sID:%X{sID} - conID:%X{conID} - clReqID:%X{clReqID}
+									- %msg%n"/>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+			</Policies>
+		</RollingRandomAccessFile>
+
+		<RollingRandomAccessFile name="File-Appender-Error"
+								 fileName="${sys:thy.appdir}/loyaltyServicesRest/log/error"
+								 filePattern="${sys:thy.appdir}/loyaltyServicesRest/log/error-%d{yyyy-MM-dd-HH}.log" 
+								 immediateFlush="false">
+			<PatternLayout Pattern="%d{yy-MM-dd HH:mm:ss.SSS} [%t] %-5level %marker
+									%C{1}.%M(%L) txID:%X{txID} - sID:%X{sID} - conID:%X{conID} -
+									clReqID:%X{clReqID} - %msg%n"/>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+			</Policies>
+		</RollingRandomAccessFile>
+		
+<!-- 		<GELF name="gelfAppender" server="graylog.thy.com" hostName="localhost" port="12212" protocol="udp"> -->
+<!-- 			<PatternLayout pattern="%d{dd MMM yyyy HH:mm:ss,SSS} %5p %c{1} - %m%n" /> -->
+<!-- 			<KeyValuePair key="extractStacktrace" value="true" /> -->
+<!-- 			<KeyValuePair key="addExtendedInformation" value="true" /> -->
+<!-- 			<KeyValuePair key="facility" value="gelfj" /> -->
+<!-- 			<KeyValuePair key="environment" value="TEST" /> -->
+<!-- 			<KeyValuePair key="application" value="loyaltyservicestest" /> -->
+<!-- 			<KeyValuePair key="additionalFields" value="{'environment': 'TEST', 'application': 'loyaltyservicestest','test_field':'test_value'}" /> -->
+<!-- 		</GELF> -->
+	</Appenders>
+
+	<Loggers>
+		<Root level="info" includeLocation="true">
+			<appender-ref ref="Console" />
+		</Root>
+
+		<AsyncLogger name="com.thy.loyaltyServicesRest" includeLocation="true" level="info" additivity="true">
+			<appender-ref ref="File-Appender-Info" />
+		</AsyncLogger>
+
+		<AsyncLogger name="org.springframework" level="error" additivity="true">
+			<appender-ref ref="File-Appender-Error" />
+		</AsyncLogger>
+	</Loggers>
+</Configuration>

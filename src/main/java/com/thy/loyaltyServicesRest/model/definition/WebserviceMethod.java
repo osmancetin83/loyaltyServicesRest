@@ -56,10 +56,12 @@ public class WebserviceMethod extends AbstractModel implements java.io.Serializa
 	@Column(name = "STATUS", nullable = false, length = 2)
 	private String status;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "webserviceMethod")
+//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "webserviceMethod")
+	@OneToMany(mappedBy = "webserviceMethod")
 	private List<WebserviceMethodConsumer> webserviceMethodConsumers = Lists.newArrayList(); //new HashSet<WebserviceMethodConsumer>(0);
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "webserviceMethod")
+//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "webserviceMethod")
+	@OneToMany(mappedBy = "webserviceMethod")
 	private List<WebserviceResultMessage> webserviceResultMessages = Lists.newArrayList(); //new HashSet<WebserviceResultMessage>(0);
 
 }

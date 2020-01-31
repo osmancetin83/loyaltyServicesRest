@@ -47,7 +47,8 @@ public class Webservice extends AbstractModel implements java.io.Serializable {
 	@Column(name = "STATUS", nullable = false, length = 2)
 	private String status;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "webservice")
+//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "webservice")
+	@OneToMany(mappedBy = "webservice")
 	private List<WebserviceMethod> webserviceMethods = Lists.newArrayList();// new HashSet<WebserviceMethod>(0);
 
 
