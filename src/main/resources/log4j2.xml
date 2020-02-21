@@ -1,58 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="off" shutdownHook="disable" >
+<Configuration status="debug" shutdownHook="disable" >
+<!-- trace debug info warn error fatal -->
+	<Properties>
+        <Property name="LOG_PATTERN">%d{yy-MM-dd HH:mm:ss.SSS} [%t] %-5level %C{1}.%M(%L) : %msg%n</Property>
+        <Property name="APP_LOG_ROOT">D:/THY/loyaltyServicesRest</Property>
+    </Properties>
+    
 	<Appenders>
-		<Console name="Console" target="SYSTEM_OUT">
-			<PatternLayout Pattern="%d{yy-MM-dd HH:mm:ss.SSS} [%t] %-5level %C{1}.%M(%L)
-									%marker txID:%X{txID} - sID:%X{sID} - conID:%X{conID} -
-									clReqID:%X{clReqID} - %msg%n"/>
+		<Console name="Log2Console" target="SYSTEM_OUT" follow="true">
+			<PatternLayout Pattern="${LOG_PATTERN}"/>
 		</Console>
 
+<!-- 		<RollingRandomAccessFile name="File-Appender-Info" -->
+<!-- 								 fileName="${APP_LOG_ROOT}/log/applog" -->
+<!-- 								 filePattern="${APP_LOG_ROOT}/log/applog-%d{yyyy-MM-dd-HH}.log"   -->
+<!-- 								 immediateFlush="false"> -->
+<!-- 			<PatternLayout Pattern="${LOG_PATTERN}"/> -->
+<!-- 			<Policies> -->
+<!-- 				<TimeBasedTriggeringPolicy interval="1" modulate="true" /> -->
+<!-- 			</Policies> -->
+<!-- 		</RollingRandomAccessFile> -->
+		
 		<RollingRandomAccessFile name="File-Appender-Info"
-								 fileName="${sys:thy.appdir}/loyaltyServicesRest/log/applog"
-								 filePattern="${sys:thy.appdir}/loyaltyServicesRest/log/applog-%d{yyyy-MM-dd-HH}.log"  
+								 fileName="${APP_LOG_ROOT}/log/INFO"
+								 filePattern="${APP_LOG_ROOT}/log/INFO-%d{yyyy-MM-dd-HH}.log" 
 								 immediateFlush="false">
-			<PatternLayout Pattern="%d{yy-MM-dd HH:mm:ss.SSS} %-5level %marker %C{1}.%M(%L)
-									txID:%X{txID} - sID:%X{sID} - conID:%X{conID} - clReqID:%X{clReqID}
-									- %msg%n"/>
+			<PatternLayout Pattern="${LOG_PATTERN}"/>
+			<LevelRangeFilter minLevel="INFO" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+			</Policies>
+		</RollingRandomAccessFile>
+
+		<RollingRandomAccessFile name="File-Appender-Debug"
+								 fileName="${APP_LOG_ROOT}/log/DEBUG"
+								 filePattern="${APP_LOG_ROOT}/log/DEBUG-%d{yyyy-MM-dd-HH}.log" 
+								 immediateFlush="false">
+			<PatternLayout Pattern="%d{yy-MM-dd HH:mm:ss.SSS} [%t] %-5level %C{1}.%M(%L) : %msg%n"/>
+			<LevelRangeFilter minLevel="ERROR" maxLevel="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
 			<Policies>
 				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
 			</Policies>
 		</RollingRandomAccessFile>
 
 		<RollingRandomAccessFile name="File-Appender-Error"
-								 fileName="${sys:thy.appdir}/loyaltyServicesRest/log/error"
-								 filePattern="${sys:thy.appdir}/loyaltyServicesRest/log/error-%d{yyyy-MM-dd-HH}.log" 
+								 fileName="${APP_LOG_ROOT}/log/ERROR"
+								 filePattern="${APP_LOG_ROOT}/log/ERROR-%d{yyyy-MM-dd-HH}.log" 
 								 immediateFlush="false">
-			<PatternLayout Pattern="%d{yy-MM-dd HH:mm:ss.SSS} [%t] %-5level %marker
-									%C{1}.%M(%L) txID:%X{txID} - sID:%X{sID} - conID:%X{conID} -
-									clReqID:%X{clReqID} - %msg%n"/>
+			<PatternLayout Pattern="%d{yy-MM-dd HH:mm:ss.SSS} [%t] %-5level %C{1}.%M(%L) : %msg%n"/>
+			<LevelRangeFilter minLevel="ERROR" maxLevel="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
 			<Policies>
 				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
 			</Policies>
 		</RollingRandomAccessFile>
-		
-<!-- 		<GELF name="gelfAppender" server="graylog.thy.com" hostName="localhost" port="12212" protocol="udp"> -->
-<!-- 			<PatternLayout pattern="%d{dd MMM yyyy HH:mm:ss,SSS} %5p %c{1} - %m%n" /> -->
-<!-- 			<KeyValuePair key="extractStacktrace" value="true" /> -->
-<!-- 			<KeyValuePair key="addExtendedInformation" value="true" /> -->
-<!-- 			<KeyValuePair key="facility" value="gelfj" /> -->
-<!-- 			<KeyValuePair key="environment" value="TEST" /> -->
-<!-- 			<KeyValuePair key="application" value="loyaltyservicestest" /> -->
-<!-- 			<KeyValuePair key="additionalFields" value="{'environment': 'TEST', 'application': 'loyaltyservicestest','test_field':'test_value'}" /> -->
-<!-- 		</GELF> -->
+
 	</Appenders>
 
 	<Loggers>
-		<Root level="info" includeLocation="true">
-			<appender-ref ref="Console" />
+		<Root level="debug">
+			<appender-ref ref="Log2Console" />
 		</Root>
 
-		<AsyncLogger name="com.thy.loyaltyServicesRest" includeLocation="true" level="info" additivity="true">
-			<appender-ref ref="File-Appender-Info" />
+		<AsyncLogger name="AsyncLogger_INFO" includeLocation="true" level="info" additivity="false">
+			<appender-ref ref="File-Appender-Info" level="INFO"/>
 		</AsyncLogger>
 
-		<AsyncLogger name="org.springframework" level="error" additivity="true">
-			<appender-ref ref="File-Appender-Error" />
+		<AsyncLogger name="org.springframework" includeLocation="true" level="debug" additivity="false">
+			<appender-ref ref="File-Appender-Debug" level="DEBUG"/>
+		</AsyncLogger>
+
+		<AsyncLogger name="org.springframework" includeLocation="true" level="error" additivity="false">
+			<appender-ref ref="File-Appender-Error" level="ERROR"/>
 		</AsyncLogger>
 	</Loggers>
 </Configuration>
